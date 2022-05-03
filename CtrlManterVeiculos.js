@@ -1,29 +1,29 @@
 "use strict";
 
 import Status from "/Status.js";
-import Departamento from "/Departamento.js";
-import DaoDepartamento from "/DaoDepartamento.js";
-import ViewerDepartamento from "/ViewerDepartamento.js";
+import Veiculo from "/Veiculo.js";
+import DaoVeiculo from "/DAOVeiculo.js";
+import VeiculoViewer from "/VeiculoViewer.js";
 
-export default class CtrlManterDepartamento {
+export default class CtrlManterVeiculos {
   
   //-----------------------------------------------------------------------------------------//
 
   //
   // Atributos do Controlador
   //
-  #dao;      // Referência para o Data Access Object para o Store de Departamentos
+  #dao;      // Referência para o Data Access Object para o Store de Servico
   #viewer;   // Referência para o gerenciador do viewer 
-  #posAtual; // Indica a posição do objeto Departamento que estiver sendo apresentado
+  #posAtual; // Indica a posição do objeto Aluno que estiver sendo apresentado
   #status;   // Indica o que o controlador está fazendo 
   
   //-----------------------------------------------------------------------------------------//
 
   constructor() {
-    this.#dao = new DaoDepartamento();
-    this.#viewer = new ViewerDepartamento(this);
+    this.#dao = new DAOVeiculo();
+    this.#viewer = new VeiculoViewer(this);
     this.#posAtual = 1;
-    this.#atualizarContextoNavegacao();    
+    this.#atualizarContextoNavegacao();
   }
   
   //-----------------------------------------------------------------------------------------//
@@ -35,11 +35,11 @@ export default class CtrlManterDepartamento {
     // Determina ao viewer que ele está apresentando dos dados 
     this.#viewer.statusApresentacao();
     
-    // Solicita ao DAO que dê a lista de todos os departamentos presentes na base
-    let conjDeptos = await this.#dao.obterDepartamentos();
+    // Solicita ao DAO que dê a lista de todos os alunos presentes na base
+    let conj_veic = await this.#dao.obterVeiculos();
     
-    // Se a lista de departamentos estiver vazia
-    if(conjDeptos.length == 0) {
+    // Se a lista de alunos estiver vazia
+    if(conj_veic.length == 0) {
       // Posição Atual igual a zero indica que não há objetos na base
       this.#posAtual = 0;
       
@@ -48,18 +48,18 @@ export default class CtrlManterDepartamento {
     }
     else {
       // Se é necessário ajustar a posição atual, determino que ela passa a ser 1
-      if(this.#posAtual == 0 || this.#posAtual > conjDeptos.length)
+      if(this.#posAtual == 0 || this.#posAtual > conj_veic.length)
         this.#posAtual = 1;
       // Peço ao viewer que apresente o objeto da posição atual
-      this.#viewer.apresentar(this.#posAtual, conjDeptos.length, conjDeptos[this.#posAtual - 1]);
+      this.#viewer.apresentar(this.#posAtual, conj_veic.length, conj_veic[this.#posAtual - 1]);
     }
   }
   
   //-----------------------------------------------------------------------------------------//
 
   async apresentarPrimeiro() {
-    let conjDeptos = await this.#dao.obterDepartamentos();
-    if(conjDeptos.length > 0)
+    let conj_veic = await this.#dao.obterVeiculos();
+    if(conj_veic.length > 0)
       this.#posAtual = 1;
     this.#atualizarContextoNavegacao();
   }
@@ -67,8 +67,8 @@ export default class CtrlManterDepartamento {
   //-----------------------------------------------------------------------------------------//
 
   async apresentarProximo() {
-    let conjDeptos = await this.#dao.obterDepartamentos();
-    if(this.#posAtual < conjDeptos.length)
+    let conj_veic = await this.#dao.obterVeiculos();
+    if(this.#posAtual < conj_veic.length)
       this.#posAtual++;
     this.#atualizarContextoNavegacao();
   }
@@ -76,7 +76,7 @@ export default class CtrlManterDepartamento {
   //-----------------------------------------------------------------------------------------//
 
   async apresentarAnterior() {
-    let conjDeptos = await this.#dao.obterDepartamentos();
+    let conj_veic = await this.#dao.obterVeiculos();
     if(this.#posAtual > 1)
       this.#posAtual--;
     this.#atualizarContextoNavegacao();
@@ -85,14 +85,14 @@ export default class CtrlManterDepartamento {
   //-----------------------------------------------------------------------------------------//
 
   async apresentarUltimo() {
-    let conjDeptos = await this.#dao.obterDeptos();
-    this.#posAtual = conjDeptos.length;
+    let conj_veic = await this.#dao.obterVeiculos();
+    this.#posAtual = conj_veic.length;
     this.#atualizarContextoNavegacao();
   }
 
   //-----------------------------------------------------------------------------------------//
   
-  iniciarIncluir() {
+  iniciar_incluir() {
     this.#status = Status.INCLUINDO;
     this.#viewer.statusEdicao(Status.INCLUINDO);
     // Guardo a informação que o método de efetivação da operação é o método incluir. 
@@ -103,7 +103,7 @@ export default class CtrlManterDepartamento {
 
   //-----------------------------------------------------------------------------------------//
   
-  iniciarAlterar() {
+  iniciar_alterar() {
     this.#status = Status.ALTERANDO;
     this.#viewer.statusEdicao(Status.ALTERANDO);
     // Guardo a informação que o método de efetivação da operação é o método incluir. 
@@ -114,7 +114,7 @@ export default class CtrlManterDepartamento {
 
   //-----------------------------------------------------------------------------------------//
   
-  iniciarExcluir() {
+  iniciar_excluir() {
     this.#status = Status.EXCLUINDO;
     this.#viewer.statusEdicao(Status.EXCLUINDO);
     // Guardo a informação que o método de efetivação da operação é o método incluir. 
@@ -125,11 +125,11 @@ export default class CtrlManterDepartamento {
 
   //-----------------------------------------------------------------------------------------//
  
-  async incluir(sigla, nome, numEmpregados) {
+  async incluir(cod_veic, modelo_veic, desc_veic, valor_veic) {
     if(this.#status == Status.INCLUINDO) {
       try {
-        let depto = new Departamento(sigla, nome, numEmpregados);
-        await this.#dao.incluir(depto); 
+        let veiculo = new Veiculo(cod_veic, modelo_veic, desc_veic, valor_veic);
+        await this.#dao.incluir(veiculo); 
         this.#status = Status.NAVEGANDO;
         this.#atualizarContextoNavegacao();
       }
@@ -141,16 +141,17 @@ export default class CtrlManterDepartamento {
 
   //-----------------------------------------------------------------------------------------//
  
-  async alterar(sigla, nome, numEmpregados) {
+  async alterar(cod_veic, modelo_veic, desc_veic, valor_veic) {
     if(this.#status == Status.ALTERANDO) {
       try {
-        let depto = await this.#dao.obterDepartamentoPelaSigla(sigla); 
-        if(depto == null) {
-          alert("Departamento com a sigla " + sigla + " não encontrado.");
+        let veiculo = await this.#dao.obter_veiculo_pelo_codigo(cod_veic); 
+        if(veiculo == null) {
+          alert("Veiculo com o código " + cod_veic + " não encontrado.");
         } else {
-          depto.setNome(nome);
-          depto.setNumEmpregados(numEmpregados);
-          await this.#dao.alterar(depto); 
+          veiculo.setCod_veic(cod_veic);
+          veiculo.setModelo_veic(modelo_veic);
+          veiculo.setDesc_veic(desc_veic);
+          await this.#dao.alterar(veiculo); 
         }
         this.#status = Status.NAVEGANDO;
         this.#atualizarContextoNavegacao();
@@ -163,14 +164,14 @@ export default class CtrlManterDepartamento {
 
   //-----------------------------------------------------------------------------------------//
  
-  async excluir(sigla) {
+  async excluir(cod_veic) {
     if(this.#status == Status.EXCLUINDO) {
       try {
-        let depto = await this.#dao.obterDepartamentoPelaSigla(sigla); 
-        if(depto == null) {
-          alert("Departamento com a sigla " + sigla + " não encontrado.");
+        let veiculo = await this.#dao.obter_veiculo_pelo_codigo(cod_veic); 
+        if(veiculo == null) {
+          alert("Veículo com o código " + cod_veic + " não encontrado.");;
         } else {
-          await this.#dao.excluir(depto); 
+          await this.#dao.excluir(veiculo); 
         }
         this.#status = Status.NAVEGANDO;
         this.#atualizarContextoNavegacao();
@@ -195,5 +196,3 @@ export default class CtrlManterDepartamento {
 
   //-----------------------------------------------------------------------------------------//
 }
-
-//------------------------------------------------------------------------//

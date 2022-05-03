@@ -1,14 +1,14 @@
 {
-  "name": "Cadastro de Alunos",
-  "short_name": "CadAlunos",
+  "name": "Cadastro de Veiculos",
+  "short_name": "CadVeiculos",
   "categories": ["education","social"],
   "start_url": "/",
   "scope": ".",
   "shortcuts" : [
     {
-      "name": "Cadastro de Alunos",
+      "name": "Cadastro de Veiculos",
       "url": "/",
-      "description": "Cadastro de Alunos"
+      "description": "Cadastro de Veiculos"
     }
   ],
   

@@ -1,10 +1,10 @@
 import Status from "/Status.js";
-import Departamento from "/Departamento.js";
+import Veiculo from "/Veiculo.js";
 import ViewerError from "/ViewerError.js";
 
 //------------------------------------------------------------------------//
 
-export default class ViewerDepartamento {
+export default class VeiculoViewer {
 
   #ctrl;
   
@@ -28,9 +28,10 @@ export default class ViewerDepartamento {
     this.btOk        = this.obterElemento('btOk');
     this.btCancelar  = this.obterElemento('btCancelar');
 
-   this.tfSigla = this.obterElemento('tfSigla');
-   this.tfNome       = this.obterElemento('tfNome');
-   this.tfNumEmpregados      = this.obterElemento('tfNumEmpregados');
+    this.tfCodigo = this.obterElemento('tfCodigo');
+    this.tfNome       = this.obterElemento('tfModelo');
+    this.tfDescricao      = this.obterElemento('tfDescricao');
+    this.tfValor     = this.obterElemento('tfValor');
       
     this.btPrimeiro.onclick = fnBtPrimeiro; 
     this.btProximo.onclick = fnBtProximo; 
@@ -65,20 +66,22 @@ export default class ViewerDepartamento {
 
 //------------------------------------------------------------------------//
   
-  apresentar(pos, qtde, departamento) {    
+  apresentar(pos, qtde, veiculo) {    
     
     this.configurarNavegacao( pos <= 1 , pos == qtde );   
 
-    if(departamento == null) {
-      this.tfSigla.value = "";
-      this.tfNome.value       = "";
-      this.tfNumEmpregados.value      = "";
-      this.divAviso.innerHTML = " Número de Departamentos: 0";
+    if(veiculo == null) {
+      this.tfCodigo.value = "";
+      this.tfModelo.value       = "";
+      this.tfDescricao.value      = "";
+      this.tfValor.value     = "";
+      this.divAviso.innerHTML = " Número de Veículos: 0";
     } else {
-      this.tfSigla.value = departamento.getSigla();
-      this.tfNome.value      = departamento.getNome();
-      this.tfNumEmpregados.value     = departamento.getNumEmpregados();
-      this.divAviso.innerHTML = "Posição: " + pos + " | Número de Departamentos: " + qtde;
+      this.tfCodigo.value = veiculo.getCod_veic();
+      this.tfNome.value       = veiculo.getModelo_veic();
+      this.tfDescricao.value      = veiculo.getDesc_veic();
+      this.tfValor.value     = veiculo.getValor_veic();
+      this.divAviso.innerHTML = "Posição: " + pos + " | Número de Veículos: " + qtde;
     }
   }
 
@@ -99,31 +102,35 @@ export default class ViewerDepartamento {
     this.divDialogo.hidden = false; 
     
     if(operacao != Status.EXCLUINDO) {
-      this.tfSigla.disabled = false;
-      this.tfNome.disabled = false;
-      this.tfNumEmpregados.disabled = false;
+      this.tfCodigo.disabled = false;
+      this.tfModelo.disabled = false;
+      this.tfDescricao.disabled = false;
+      this.tfValor.disabled = false;
       this.divAviso.innerHTML = "";      
     } else {
       this.divAviso.innerHTML = "Deseja excluir este registro?";      
     }
     if(operacao == Status.INCLUINDO) {
-      this.tfSigla.disabled = false;
-      this.tfSigla.value = "";
-      this.tfNome.value = "";
-      this.tfNumEmpregados.value = "";
+      this.tfCodigo.disabled = false;
+      this.tfCodigo.value = "";
+      this.tfModelo.value = "";
+      this.tfDescricao.value = "";
+      this.tfValor.value = "";
+
     }
   }
 
 //------------------------------------------------------------------------//
   
   statusApresentacao() { 
-    this.tfSigla.disabled = true;
+    this.tfModelo.disabled = true;
     this.divNavegar.hidden = false;
     this.divComandos.hidden = false;
     this.divDialogo.hidden = true; 
-    this.tfNome.disabled = true;
-    this.tfNumEmpregados.disabled = true;
-    
+    this.tfCodigo.disabled = true;
+    this.tfDescricao.disabled = true;
+    this.tfDescricao.disabled = true;
+    this.tfValor.disabled = true;
   }
 
 }
@@ -193,14 +200,14 @@ function fnBtExcluir() {
 //------------------------------------------------------------------------//
 
 function fnBtOk() {
-  const sigla = this.viewer.tfSigla.value;
-  const nome = this.viewer.tfNome.value;
-  const NumEmpregados = this.viewer.tfNumEmpregados.value;
-  
+  const cod_veic = this.viewer.tfCodigo.value;
+  const modelo_veic = this.viewer.tfModelo.value;
+  const desc_veic = this.viewer.tfDescricao.value;
+  const valor_veic = this.viewer.tfValor.value;
     
   // Como defini que o método "efetivar" é um dos métodos incluir, excluir ou alterar
   // não estou precisando colocar os ninhos de IF abaixo.
-  this.viewer.getCtrl().efetivar(sigla, nome, NumEmpregados); 
+  this.viewer.getCtrl().efetivar(cod_veic, modelo_veic, desc_veic, valor_veic); 
 
   // if(this.viewer.getCtrl().getStatus() == Status.INCLUINDO) {
   //  this.viewer.getCtrl().fnEfetivar(matricula, cpf, nome, email, telefone); 
@@ -218,8 +225,3 @@ function fnBtCancelar() {
 }
 
 //------------------------------------------------------------------------//
-
-
-
-
-

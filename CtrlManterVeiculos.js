@@ -36,7 +36,7 @@ export default class CtrlManterVeiculos {
     this.#viewer.statusApresentacao();
     
     // Solicita ao DAO que dê a lista de todos os alunos presentes na base
-    let conj_veic = await this.#dao.obterVeiculos();
+    let conj_veic = await this.#dao.obter_veiculos();
     
     // Se a lista de alunos estiver vazia
     if(conj_veic.length == 0) {
@@ -58,7 +58,7 @@ export default class CtrlManterVeiculos {
   //-----------------------------------------------------------------------------------------//
 
   async apresentarPrimeiro() {
-    let conj_veic = await this.#dao.obterVeiculos();
+    let conj_veic = await this.#dao.obter_veiculos();
     if(conj_veic.length > 0)
       this.#posAtual = 1;
     this.#atualizarContextoNavegacao();
@@ -67,7 +67,7 @@ export default class CtrlManterVeiculos {
   //-----------------------------------------------------------------------------------------//
 
   async apresentarProximo() {
-    let conj_veic = await this.#dao.obterVeiculos();
+    let conj_veic = await this.#dao.obter_veiculos();
     if(this.#posAtual < conj_veic.length)
       this.#posAtual++;
     this.#atualizarContextoNavegacao();
@@ -76,7 +76,7 @@ export default class CtrlManterVeiculos {
   //-----------------------------------------------------------------------------------------//
 
   async apresentarAnterior() {
-    let conj_veic = await this.#dao.obterVeiculos();
+    let conj_veic = await this.#dao.obter_veiculos();
     if(this.#posAtual > 1)
       this.#posAtual--;
     this.#atualizarContextoNavegacao();
@@ -85,7 +85,7 @@ export default class CtrlManterVeiculos {
   //-----------------------------------------------------------------------------------------//
 
   async apresentarUltimo() {
-    let conj_veic = await this.#dao.obterVeiculos();
+    let conj_veic = await this.#dao.obter_veiculos();
     this.#posAtual = conj_veic.length;
     this.#atualizarContextoNavegacao();
   }

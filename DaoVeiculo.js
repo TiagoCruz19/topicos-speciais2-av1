@@ -113,36 +113,6 @@ export default class DaoVeiculo {
 
   //-----------------------------------------------------------------------------------------//
 
-  /*async obterAlunosPeloAutoIncrement() {
-    let connection = await this.obterConexao();      
-    let promessa = new Promise(function(resolve, reject) {
-      let transacao;
-      let store;
-      try {
-        transacao = connection.transaction(["AlunoST"], "readonly");
-        store = transacao.objectStore("AlunoST");
-      } 
-      catch (e) {
-        reject(new ModelError("Erro: " + e));
-      }
-      let array = [];
-      store.openCursor().onsuccess = function(event) {
-        var cursor = event.target.result;
-        if (cursor) {        
-          const novo = Aluno.assign(cursor.value);
-          array.push(novo);
-          cursor.continue();
-        } else {
-          resolve(array);
-        }
-      };
-    });
-    this.arrayAlunos = await promessa;
-    return this.arrayAlunos;
-  }*/
-
-  //-----------------------------------------------------------------------------------------//
-
   async incluir(veiculo) {
     let connection = await this.obterConexao();      
     let resultado = new Promise( (resolve, reject) => {
@@ -170,12 +140,12 @@ export default class DaoVeiculo {
       };
       let store = transacao.objectStore("veic_st");     
       let indice = store.index('idxveic');
-      var keyValue = IDBKeyRange.only(veic.getCod_veic());
+      var keyValue = IDBKeyRange.only(veiculo.getCod_veic());
       indice.openCursor(keyValue).onsuccess = event => {
         const cursor = event.target.result;
         if (cursor) {
-          if (cursor.value.cod_veic == veic.getCod_veic()) {
-            const request = cursor.update(Veiculo.deassign(veic));
+          if (cursor.value.cod_veic == veiculo.getCod_veic()) {
+            const request = cursor.update(veiculo.deassign(veic));
             request.onsuccess = () => {
               console.log("[DaoVeiculo.alterar] Cursor update - Sucesso ");
               resolve("Ok");

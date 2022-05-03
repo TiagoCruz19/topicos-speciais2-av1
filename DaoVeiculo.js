@@ -101,7 +101,7 @@ export default class DaoVeiculo {
       let consulta = indice.get(cod_veic);
       consulta.onsuccess = function(event) { 
         if(consulta.result != null)
-          resolve(veic.assign(consulta.result)); 
+          resolve(veiculo.assign(consulta.result)); 
         else
           resolve(null);
       };
@@ -121,7 +121,7 @@ export default class DaoVeiculo {
         reject(new ModelError("Não foi possível incluir o veiculo", event.target.error));
       };
       let store = transacao.objectStore("veic_st");
-      let requisicao = store.add(veic.deassign(veiculo));
+      let requisicao = store.add(veiculo.deassign(veiculo));
       requisicao.onsuccess = function(event) {
           resolve(true);              
       };
@@ -145,7 +145,7 @@ export default class DaoVeiculo {
         const cursor = event.target.result;
         if (cursor) {
           if (cursor.value.cod_veic == veiculo.getCod_veic()) {
-            const request = cursor.update(veiculo.deassign(veic));
+            const request = cursor.update(veiculo.deassign(veiculo));
             request.onsuccess = () => {
               console.log("[DaoVeiculo.alterar] Cursor update - Sucesso ");
               resolve("Ok");

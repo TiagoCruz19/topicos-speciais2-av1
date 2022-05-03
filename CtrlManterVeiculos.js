@@ -151,6 +151,7 @@ export default class CtrlManterVeiculos {
           veiculo.setCod_veic(cod_veic);
           veiculo.setModelo_veic(modelo_veic);
           veiculo.setDesc_veic(desc_veic);
+          veiculo.setValor_veic(valor_veic);
           await this.#dao.alterar(veiculo); 
         }
         this.#status = Status.NAVEGANDO;

@@ -140,7 +140,7 @@ export default class Veiculo {
   static validar_valor_veic(valor_veic) {
     if(valor_veic == null || valor_veic == "" || valor_veic == undefined)
       return false;
-    const padrao_valor_veic = /[0-9]+,[0-9];
+    const padrao_valor_veic = /[0-9]+,[0-9]/;
     if (!padrao_valor_veic.test(valor_veic)) 
       return false;
     return true;

@@ -29,7 +29,7 @@ export default class VeiculoViewer {
     this.btCancelar  = this.obterElemento('btCancelar');
 
     this.tfCodigo = this.obterElemento('tfCodigo');
-    this.tfNome       = this.obterElemento('tfModelo');
+    this.tfModelo       = this.obterElemento('tfModelo');
     this.tfDescricao      = this.obterElemento('tfDescricao');
     this.tfValor     = this.obterElemento('tfValor');
       
@@ -78,7 +78,7 @@ export default class VeiculoViewer {
       this.divAviso.innerHTML = " Número de Veículos: 0";
     } else {
       this.tfCodigo.value = veiculo.getCod_veic();
-      this.tfNome.value       = veiculo.getModelo_veic();
+      this.tfModelo.value       = veiculo.getModelo_veic();
       this.tfDescricao.value      = veiculo.getDesc_veic();
       this.tfValor.value     = veiculo.getValor_veic();
       this.divAviso.innerHTML = "Posição: " + pos + " | Número de Veículos: " + qtde;
@@ -177,7 +177,7 @@ function fnBtUltimo() {
 function fnBtIncluir() {
   // Aqui, o 'this' é o objeto Button. Eu adicionei o atributo 'viewer'
   // no botão para poder executar a instrução abaixo.
-  this.viewer.getCtrl().iniciarIncluir();
+  this.viewer.getCtrl().iniciar_incluir();
 }
 
 //------------------------------------------------------------------------//
@@ -185,7 +185,7 @@ function fnBtIncluir() {
 function fnBtAlterar() {
   // Aqui, o 'this' é o objeto Button. Eu adicionei o atributo 'viewer'
   // no botão para poder executar a instrução abaixo.
-  this.viewer.getCtrl().iniciarAlterar();
+  this.viewer.getCtrl().iniciar_alterar();
   
 }
 
@@ -194,7 +194,7 @@ function fnBtAlterar() {
 function fnBtExcluir() {
   // Aqui, o 'this' é o objeto Button. Eu adicionei o atributo 'viewer'
   // no botão para poder executar a instrução abaixo.
-  this.viewer.getCtrl().iniciarExcluir();
+  this.viewer.getCtrl().iniciar_excluir();
 }
 
 //------------------------------------------------------------------------//

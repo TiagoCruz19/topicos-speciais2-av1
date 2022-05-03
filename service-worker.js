@@ -14,14 +14,14 @@ const FILES_TO_CACHE = [
   "/ViewerError.js",
   "/favicon.ico",
   "/manifest.json",
-  "/style.css"
+  "/style.css",
 ];
 
-self.addEventListener("install", evt =>  {
+self.addEventListener("install", (evt) => {
   console.log("[App]Instalação");
-  caches.keys().then(keyList => {
+  caches.keys().then((keyList) => {
     return Promise.all(
-      keyList.map(key => {
+      keyList.map((key) => {
         if (key !== CACHE_NAME && key !== DATA_CACHE_NAME) {
           console.log("[App] Removendo cache antigo", key);
           return caches.delete(key);
@@ -31,7 +31,7 @@ self.addEventListener("install", evt =>  {
   });
 
   evt.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
+    caches.open(CACHE_NAME).then((cache) => {
       console.log("[App] Pré-caching dos arquivos" + cache);
       return cache.addAll(FILES_TO_CACHE);
     })
@@ -39,12 +39,12 @@ self.addEventListener("install", evt =>  {
   self.skipWaiting();
 });
 
-self.addEventListener("activate", evt => {
+self.addEventListener("activate", (evt) => {
   console.log("[App] Activate");
   evt.waitUntil(
-    caches.keys().then(keyList => {
+    caches.keys().then((keyList) => {
       return Promise.all(
-        keyList.map(key => {
+        keyList.map((key) => {
           if (key !== CACHE_NAME && key !== DATA_CACHE_NAME) {
             console.log("[App] Removendo cache antigo", key);
             return caches.delete(key);

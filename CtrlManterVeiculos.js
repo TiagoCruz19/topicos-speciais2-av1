@@ -2,7 +2,7 @@
 
 import Status from "/Status.js";
 import Veiculo from "/Veiculo.js";
-import DaoVeiculo from "/DAOVeiculo.js";
+import DAOVeiculo from "/DAOVeiculo.js";
 import VeiculoViewer from "/VeiculoViewer.js";
 
 export default class CtrlManterVeiculos {

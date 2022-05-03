@@ -183,7 +183,7 @@ export default class DaoVeiculo {
             return;
           }
         } else {
-          reject(new ModelError("Veiculo com o código " + veiculo.getCod_veic()) + " não encontrado!",""));
+          reject(new ModelError("Veiculo com o código " + veiculo.getCod_veic()) + " não encontrado!","");
         }
       };
     });

@@ -1,7 +1,7 @@
 :root {
-  --color-bg: #69F7BE;
+  --color-bg: #69f7be;
   --color-text-main: #000000;
-  --color-primary: #FFFF00;
+  --color-primary: #ffff00;
   --wrapper-height: 87vh;
   --image-max-width: 300px;
   --image-margin: 3rem;
@@ -30,13 +30,13 @@ body {
   background-color: var(--color-bg);
 }
 
-header {  
-  color: #000000;      
+header {
+  color: #000000;
   font-style: normal;
   font-weight: bold;
   font-size: 40px;
   line-height: 105%;
-  margin: 12px 0 12px 0;  
+  margin: 12px 0 12px 0;
   border-bottom: 4px solid #fff;
   text-align: center;
 }
@@ -65,7 +65,7 @@ main div * {
   display: none !important;
 }
 
-button  {
+button {
   font-family: HKGrotesk;
   padding: 12px 12px;
   font-size: 14px;
@@ -73,7 +73,7 @@ button  {
   height: 20px;
   align-items: center;
   cursor: pointer;
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid #000000;
   box-sizing: border-box;
   border-radius: 4px;
@@ -82,12 +82,12 @@ button  {
 }
 
 button:disabled,
-button[disabled]{
+button[disabled] {
   border: 1px solid #999999;
   background-color: #cccccc;
   color: #666666;
 }
 
 div {
-  margin: 12px 0 12px 0;  
+  margin: 12px 0 12px 0;
 }

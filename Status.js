@@ -8,6 +8,6 @@ export default class Status {
   static EXCLUINDO = new Status('Excluindo');  
   
   constructor(nome) {
-    this.#nome = nome;
+	this.#nome = nome;
   }  
 }
